@@ -32,6 +32,7 @@
 | shipping_fee_id  | integer    | null: false                    |
 | shipping_date_id | integer    | null: false                    |
 | deliver_from_id  | integer    | null: false                    |
+| status_id        | integer    | null: false                    |
 
 ### Association
 - belongs_to :user
@@ -45,12 +46,13 @@
 | ----------- |----------- | ------------------------------ | 
 | user        | references | null: false, foreign_key: true |
 | item        | references | null: false, foreign_key: true |
+| shipment    | references | null: false, foreign_key: true |
 
 ### Association
 
 - belongs_to :user
 - belongs_to :item
-
+- has_one :shipment
 
 
 ## shipmentsテーブル
@@ -62,7 +64,7 @@
 | city          | string  | null: false |
 | address       | string  | null: false |
 | building      | string  |             |
-| phone_number  | integer | null: false |
+| phone_number  | string  | null: false |
 
 ### Association
 - belongs_to :purchase
