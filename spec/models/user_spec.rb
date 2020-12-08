@@ -44,8 +44,8 @@ require 'rails_helper'
         end
 
         it 'パスワードは6文字以上でないと登録できない' do
-          @user.password = "aaaaa"
-          @user.password_confirmation = "aaaaa"
+          @user.password = "aa11"
+          @user.password_confirmation = "aa11"
           @user.valid?
           expect(@user.errors.full_messages).to include("Password is too short (minimum is 6 characters)")
         end
@@ -77,6 +77,12 @@ require 'rails_helper'
           @user.valid? 
           expect(@user.errors.full_messages).to include("Zenkaku family name can't be blank")
         end
+
+        it '名字（全角）が全角（漢字・ひらがな・カタカナ）以外の場合登録できない' do
+          @user.zenkaku_family_name = "a"
+          @user.valid?
+          expect(@user.errors.full_messages).to include("Zenkaku family name には全角文字を使用してください")
+        end
         
         it '名前（全角）が入力されていないと登録できない' do
           @user.zenkaku_first_name = ""
@@ -84,16 +90,34 @@ require 'rails_helper'
           expect(@user.errors.full_messages).to include("Zenkaku first name can't be blank")
         end
         
+        it '名前（全角）が全角（漢字・ひらがな・カタカナ）以外の場合登録できない' do
+          @user.zenkaku_first_name = "a"
+          @user.valid?
+          expect(@user.errors.full_messages).to include("Zenkaku first name には全角文字を使用してください")
+        end
+
         it '名字（カナ）が入力されていないと登録できない' do
           @user.kana_family_name = ""
           @user.valid? 
           expect(@user.errors.full_messages).to include("Kana family name can't be blank")
+        end
+
+        it '名字（カナ）が全角（カタカナ）以外の場合登録できない' do
+          @user.kana_family_name = "a"
+          @user.valid?
+          expect(@user.errors.full_messages).to include("Kana family name には全角カナ文字を使用してください")
         end
         
         it '名前（カナ）が入力されていないと登録できない' do
           @user.kana_first_name = ""
           @user.valid? 
           expect(@user.errors.full_messages).to include("Kana first name can't be blank")
+        end
+        
+        it '名前（カナ）が全角（カタカナ）以外の場合登録できない' do
+          @user.kana_first_name = "a"
+          @user.valid?
+          expect(@user.errors.full_messages).to include("Kana first name には全角カナ文字を使用してください")
         end
 
         it '生年月日が入力されていないと登録できない' do 
