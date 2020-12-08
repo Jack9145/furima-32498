@@ -50,16 +50,23 @@ require 'rails_helper'
           expect(@user.errors.full_messages).to include("Password is too short (minimum is 6 characters)")
         end
 
-        it 'パスワードが半角英数字混合出ないと登録できない(半角英字のみ)' do
+        it 'パスワードが半角英数字混合でないと登録できない(半角英字のみ)' do
           @user.password = "aaaaaa"
           @user.password_confirmation = "aaaaaa"
           @user.valid?
           expect(@user.errors.full_messages).to include("Password には英字と数字の両方を含めて設定してください")
         end
 
-        it 'パスワードが半角英数字混合出ないと登録できない(半角数字のみ)' do
+        it 'パスワードが半角英数字混合でないと登録できない(半角数字のみ)' do
           @user.password = "111111"
           @user.password_confirmation = "111111"
+          @user.valid?
+          expect(@user.errors.full_messages).to include("Password には英字と数字の両方を含めて設定してください")
+        end
+        
+        it 'パスワードが半角英数字混合でないと登録できない(全角英数字)' do
+          @user.password = "２２２ｂｂｂ"
+          @user.password_confirmation = "２２２ｂｂｂ"
           @user.valid?
           expect(@user.errors.full_messages).to include("Password には英字と数字の両方を含めて設定してください")
         end
