@@ -20,49 +20,49 @@ RSpec.describe Item, type: :model do
       end
 
       it '商品名がないと登録できない' do
-      @item.name = ""
-      @item.valid?
-      expect(@item.errors.full_messages).to include("Name can't be blank")
+        @item.name = ''
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Name can't be blank")
       end
 
-      it '商品の説明がないと登録できない' do 
-        @item.text = ""
+      it '商品の説明がないと登録できない' do
+        @item.text = ''
         @item.valid?
         expect(@item.errors.full_messages).to include("Text can't be blank")
       end
 
-      it 'カテゴリーが選択されていないと登録できない' do 
-        @item.category_id = ""
+      it 'カテゴリーが選択されていないと登録できない' do
+        @item.category_id = ''
         @item.valid?
-        expect(@item.errors.full_messages).to include("Category can't be blank", "Category is not a number")
+        expect(@item.errors.full_messages).to include("Category can't be blank", 'Category is not a number')
       end
 
       it '商品の状態が選択されていないと登録できない' do
-        @item.status_id = ""
+        @item.status_id = ''
         @item.valid?
-        expect(@item.errors.full_messages).to include("Status can't be blank", "Status is not a number")
+        expect(@item.errors.full_messages).to include("Status can't be blank", 'Status is not a number')
       end
 
       it '配送料の負担が選択されていないと登録できない' do
-        @item.shipping_fee_id = ""
+        @item.shipping_fee_id = ''
         @item.valid?
-        expect(@item.errors.full_messages).to include("Shipping fee can't be blank", "Shipping fee is not a number")
+        expect(@item.errors.full_messages).to include("Shipping fee can't be blank", 'Shipping fee is not a number')
       end
 
       it '発送元の地域が選択されていないと登録できない' do
-        @item.prefecture_id = ""
+        @item.prefecture_id = ''
         @item.valid?
-        expect(@item.errors.full_messages).to include("Prefecture can't be blank", "Prefecture is not a number")
+        expect(@item.errors.full_messages).to include("Prefecture can't be blank", 'Prefecture is not a number')
       end
 
       it '発送までの日数が選択されてないと登録できない' do
-        @item.shipping_date_id = ""
+        @item.shipping_date_id = ''
         @item.valid?
-        expect(@item.errors.full_messages).to include("Shipping date can't be blank", "Shipping date is not a number")
+        expect(@item.errors.full_messages).to include("Shipping date can't be blank", 'Shipping date is not a number')
       end
-      
+
       it '価格が入力されていないと登録できない' do
-        @item.price = ""
+        @item.price = ''
         @item.valid?
         expect(@item.errors.full_messages).to include("Price can't be blank")
       end
@@ -70,25 +70,20 @@ RSpec.describe Item, type: :model do
       it '価格の範囲が300〜9,999,999出ないと登録できない(金額が300より小さい時)' do
         @item.price = 200
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price must be greater than or equal to 300")
+        expect(@item.errors.full_messages).to include('Price must be greater than or equal to 300')
       end
-      
+
       it '価格の範囲が300〜9,999,999出ないと登録できない(金額が9,999,999より大きい時)' do
-        @item.price = 10000000
+        @item.price = 10_000_000
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price must be less than 9999999")
+        expect(@item.errors.full_messages).to include('Price must be less than 9999999')
       end
 
       it '価格が全角数字では登録できない' do
-        @item.price = "５０００"
+        @item.price = '５０００'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is not a number")
+        expect(@item.errors.full_messages).to include('Price is not a number')
       end
-
-
     end
-
-
   end
-
 end
