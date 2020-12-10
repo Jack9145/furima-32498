@@ -1,10 +1,10 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: :new
   before_action :find_params, only: [:show, :edit, :update]
-  before_action :edit_confirmation ,only: :edit
+  before_action :edit_confirmation, only: :edit
 
   def index
-    @item = Item.all.order("created_at DESC")
+    @item = Item.all.order('created_at DESC')
   end
 
   def new
@@ -44,7 +44,7 @@ class ItemsController < ApplicationController
   end
 
   def find_params
-    @item = Item.find(params[:id]) 
+    @item = Item.find(params[:id])
   end
 
   def edit_confirmation
