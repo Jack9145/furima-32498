@@ -68,7 +68,7 @@ RSpec.describe Item, type: :model do
       end
 
       it '価格の範囲が300〜9,999,999出ないと登録できない(金額が300より小さい時)' do
-        @item.price = 200
+        @item.price = 299
         @item.valid?
         expect(@item.errors.full_messages).to include('Price must be greater than or equal to 300')
       end
