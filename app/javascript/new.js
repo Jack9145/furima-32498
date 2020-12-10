@@ -6,7 +6,6 @@ function calculation() {
   const priceNow = itemPrice.value
   const taxPrice = priceNow * 0.1 
   const fixedTaxPrice = Math.floor(taxPrice)
-  //console.log (taxPrice)
   addTaxPrice.innerHTML = fixedTaxPrice
   const profit = priceNow - fixedTaxPrice
   getProfit.innerHTML = profit})
