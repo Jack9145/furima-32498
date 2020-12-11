@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: :new
+  before_action :authenticate_user!, only: [:new, :edit]
   before_action :find_params, only: [:show, :edit, :update]
   before_action :edit_confirmation, only: :edit
 
@@ -46,10 +46,8 @@ class ItemsController < ApplicationController
   end
 
   def edit_confirmation
-    if !user_signed_in?
-      redirect_to new_user_session_path
-    elsif current_user.id === @item.user_id
-    else
+    unless  
+      current_user.id === @item.user_id
       redirect_to root_path
     end
   end
