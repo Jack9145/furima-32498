@@ -15,7 +15,7 @@ class Item < ApplicationRecord
     validates :text, length: { maximum: 1000 }
     validates :price, numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than: 9_999_999 }
   end
-  
+
   with_options numericality: { other_than: 1 } do
     validates :category_id
     validates :status_id
