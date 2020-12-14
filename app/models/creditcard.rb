@@ -1,6 +1,6 @@
 class Creditcard
   include ActiveModel::Model
-  attr_accessor :card_type, :expire_month, :expire_year, :security_code, :postal_code, :prefecture_id, :city, :address, :building, :phone_number
+  attr_accessor :card_type, :expire_month, :expire_year, :security_code, :postal_code, :prefecture_id, :city, :address, :building, :phone_number, :user_id, :item_id, :purchase_id
 
   with_options presence: true do
     validates :card_type
@@ -16,6 +16,7 @@ class Creditcard
   validates :building, format: {with: /\A[ぁ-んァ-ヶ一-龥々０-９]+\z/, message: "is invalid"}, allow_blank: true
 
   def save
-    Shipment.create(postal_code: postal_code, prefecture_id: prefecture_id, city: city, address: address, phone_number: phone_number )
+    purchase = Purchase.create(user_id: user_id , item_id: item_id)
+    Shipment.create(postal_code: postal_code, prefecture_id: prefecture_id, city: city, address: address, phone_number: phone_number , building: building, purchase_id: purchase.id )
   end
 end
