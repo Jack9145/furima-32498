@@ -12,6 +12,12 @@ RSpec.describe PurchaseForm, type: :model do
     end
 
     context '商品が購入できない時' do
+      it 'トークンがうまく作成されていない時' do
+        @form.token = nil
+        @form.valid?
+        expect(@form.errors.full_messages).to include("Token can't be blank")
+      end
+
       it '郵便番号に-(ハイフン)が含まれていない時' do
         @form.postal_code = '1111111'
         @form.valid?

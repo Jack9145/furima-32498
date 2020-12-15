@@ -1,6 +1,6 @@
 class PurchaseForm
   include ActiveModel::Model
-  attr_accessor :card_type, :expire_month, :expire_year, :security_code, :postal_code, :prefecture_id, :city, :address, :building, :phone_number, :user_id, :item_id, :purchase_id
+  attr_accessor :card_type, :expire_month, :expire_year, :security_code, :postal_code, :prefecture_id, :city, :address, :building, :phone_number, :user_id, :item_id, :purchase_id, :token
 
   with_options presence: true do
     #validates :card_type
@@ -12,6 +12,7 @@ class PurchaseForm
     validates :city, format: {with: /\A[ぁ-んァ-ヶ一-龥々]+\z/, message: "is invalid"}
     validates :address, format: {with:  /\A[ぁ-んァ-ヶ一-龥々0-9-]+\z/, message: "is invalid"}
     validates :phone_number, format: {with: /\A^(0{1}\d{9,10})$\z/, message: "is invalid"}
+    validates :token
   end
   validates :building, format: {with: /\A[ぁ-んァ-ヶ一-龥々０-９]+\z/, message: "is invalid"}, allow_blank: true
 
