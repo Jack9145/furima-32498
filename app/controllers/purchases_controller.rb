@@ -2,7 +2,8 @@ class PurchasesController < ApplicationController
   before_action :authenticate_user!, only: [:index, :create]
   before_action :user_confirmation, only: [:index, :create]
   def index
-    @form= PurchaseForm.new
+    @form = PurchaseForm.new
+    @item = Item.find(params[:item_id])
   end
 
   def create
