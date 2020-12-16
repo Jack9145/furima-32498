@@ -102,11 +102,25 @@ RSpec.describe PurchaseForm, type: :model do
         expect(@form.errors.full_messages).to include('Phone number is invalid')
       end
 
-      it '電話番号が11桁以上入力された時' do
-        @form.phone_number = '090111122223333'
+      it '電話番号の入力が12桁以上だった時' do
+        @form.phone_number = '090123456789'
         @form.valid?
         expect(@form.errors.full_messages).to include('Phone number is invalid')
       end
+
+      it '電話番号の入力が9桁以下だった時' do
+        @form.phone_number = '090123456'
+        @form.valid?
+        expect(@form.errors.full_messages).to include('Phone number is invalid')
+      end
+
+      it '電話番号の入力が0から始まらない時' do
+        @form.phone_number = '19012345678'
+        @form.valid?
+        expect(@form.errors.full_messages).to include('Phone number is invalid')
+      end
+
+
     end
   end
 end
