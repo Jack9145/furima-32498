@@ -131,7 +131,7 @@
           <%= link_to item_path(item.id) do %>
             <div class='item-img-content'>
               <%= image_tag item.image, class: "item-img" %>
-              <% if Purchase.find_by(item_id: item.id) %>
+              <% if item.purchase %>
                 <div class='sold-out'>
                   <span>Sold Out!!</span>
                 </div>

@@ -7,5 +7,7 @@ FactoryBot.define do
     building          { '' }
     phone_number      { '09011111111' }
     prefecture_id     { 2 }
+    association :user
+    association :item
   end
 end

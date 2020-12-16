@@ -3,7 +3,11 @@ require 'rails_helper'
 RSpec.describe PurchaseForm, type: :model do
   describe '商品の購入' do
     before do
-      @form = FactoryBot.build(:purchase_form)
+      user = FactoryBot.create(:user)
+      item = FactoryBot.build(:item)
+      item.image = fixture_file_upload('app/assets/images/star.png')
+      item.save(user_id: user.id)
+      @form = FactoryBot.build(:purchase_form, user_id: user.id, item_id: item.id)
     end
     context '商品が購入できる時' do
       it '全ての入力項目が所定のフォームで入力されている時' do
@@ -39,55 +43,13 @@ RSpec.describe PurchaseForm, type: :model do
       it '市区町村が入力されていない時' do
         @form.city = ''
         @form.valid?
-        expect(@form.errors.full_messages).to include("City can't be blank", 'City is invalid')
-      end
-
-      it '市区町村が半角英字で入力された時' do
-        @form.city = 'aaaaa'
-        @form.valid?
-        expect(@form.errors.full_messages).to include('City is invalid')
-      end
-
-      it '市区町村が半角数字で入力された時' do
-        @form.city = '1111111'
-        @form.valid?
-        expect(@form.errors.full_messages).to include('City is invalid')
-      end
-
-      it '市区町村が全角数字で入力された時' do
-        @form.city = '１１１１１１'
-        @form.valid?
-        expect(@form.errors.full_messages).to include('City is invalid')
-      end
-
-      it '市区町村が全角英字で入力された時' do
-        @form.city = 'ｓａｐｐｏｒｏ'
-        @form.valid?
-        expect(@form.errors.full_messages).to include('City is invalid')
+        expect(@form.errors.full_messages).to include("City can't be blank")
       end
 
       it '番地が入力されていない時' do
         @form.address = ''
         @form.valid?
-        expect(@form.errors.full_messages).to include("Address can't be blank", 'Address is invalid')
-      end
-
-      it '番地に全角数字が含まれている時' do
-        @form.address = '中央区１-１'
-        @form.valid?
-        expect(@form.errors.full_messages).to include('Address is invalid')
-      end
-
-      it '番地に半角英字が含まれている時' do
-        @form.address = 'chhuoku1-1'
-        @form.valid?
-        expect(@form.errors.full_messages).to include('Address is invalid')
-      end
-
-      it '番地に全角英字が含まれている時' do
-        @form.address = 'ｃｈｕｕｏｕｋｕ1-1'
-        @form.valid?
-        expect(@form.errors.full_messages).to include('Address is invalid')
+        expect(@form.errors.full_messages).to include("Address can't be blank")
       end
 
       it '電話番号が全角数字で入力された時' do
@@ -118,6 +80,18 @@ RSpec.describe PurchaseForm, type: :model do
         @form.phone_number = '19012345678'
         @form.valid?
         expect(@form.errors.full_messages).to include('Phone number is invalid')
+      end
+
+      it 'userが存在しない時' do
+        @form.user_id = nil
+        @form.valid?
+        expect(@form.errors.full_messages).to include("User can't be blank")
+      end
+
+      it 'itemが存在しない時' do
+        @form.item_id = nil
+        @form.valid?
+        expect(@form.errors.full_messages).to include("Item can't be blank")
       end
 
 
