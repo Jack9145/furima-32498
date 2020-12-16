@@ -3,7 +3,7 @@ class PurchasesController < ApplicationController
   before_action :find_item, only: [:index, :create]
   before_action :user_confirmation, only: [:index, :create]
   before_action :sold_item, only: [:index, :create]
-  
+
   def index
     @form = PurchaseForm.new
   end
@@ -45,5 +45,4 @@ class PurchasesController < ApplicationController
   def sold_item
     redirect_to root_path if @item.purchase
   end
-
 end
