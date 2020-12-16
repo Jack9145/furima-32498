@@ -1,6 +1,7 @@
 class PurchasesController < ApplicationController
   before_action :authenticate_user!, only: [:index, :create]
   before_action :user_confirmation, only: [:index, :create]
+  before_action :sold_item, only: [:index, :create]
   def index
     @form = PurchaseForm.new
     @item = Item.find(params[:item_id])
@@ -36,4 +37,9 @@ class PurchasesController < ApplicationController
     @item = Item.find(params[:item_id])
     redirect_to root_path if current_user.id === @item.user_id
   end
+
+  def sold_item
+    redirect_to root_path if Purchase.find_by(item_id: @item.id)
+  end
+
 end
