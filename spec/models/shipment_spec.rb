@@ -12,9 +12,9 @@ RSpec.describe Shipment, type: :model do
     end
 
     context '商品が購入できない時' do
-     it '郵便番号が空欄の時' do
-      @shipment.postal_code = nil
-      binding.pry
+      it '郵便番号が空欄の時' do
+        @shipment.postal_code = nil
+        binding.pry
       end
     end
   end

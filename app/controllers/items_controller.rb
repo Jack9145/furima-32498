@@ -54,10 +54,8 @@ class ItemsController < ApplicationController
   def user_confirmation
     redirect_to root_path unless current_user.id === @item.user_id
   end
-  
+
   def sold_item
-    if Purchase.find_by(item_id: @item.id)
-      redirect_to root_path
-    end
+    redirect_to root_path if Purchase.find_by(item_id: @item.id)
   end
 end
