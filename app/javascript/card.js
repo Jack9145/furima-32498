@@ -5,9 +5,7 @@ const pay = () => {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const formResult = document.getElementById("charge-form");
-    console.log(formResult);
     const formData = new FormData(formResult);
-    console.log(formData);
     const card = {
       number: formData.get("purchase_form[card_type]"),
       cvc: formData.get("purchase_form[security_code]"),
