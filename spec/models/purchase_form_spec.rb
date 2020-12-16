@@ -13,6 +13,11 @@ RSpec.describe PurchaseForm, type: :model do
       it '全ての入力項目が所定のフォームで入力されている時' do
         expect(@form).to be_valid
       end
+
+      it '建物名の入力がなくても登録できる' do
+        @form.building = ''
+        expect(@form).to be_valid
+      end
     end
 
     context '商品が購入できない時' do

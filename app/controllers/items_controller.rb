@@ -56,6 +56,6 @@ class ItemsController < ApplicationController
   end
 
   def sold_item
-    redirect_to root_path if Purchase.find_by(item_id: @item.id)
+    redirect_to root_path if @item.purchase
   end
 end
