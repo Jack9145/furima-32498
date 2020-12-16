@@ -1,8 +1,9 @@
 class PurchasesController < ApplicationController
   before_action :authenticate_user!, only: [:index, :create]
-  before_action :find_item, only: :index
+  before_action :find_item, only: [:index, :create]
   before_action :user_confirmation, only: [:index, :create]
   before_action :sold_item, only: [:index, :create]
+  
   def index
     @form = PurchaseForm.new
   end
@@ -21,7 +22,7 @@ class PurchasesController < ApplicationController
   private
 
   def purchase_params
-    params.require(:purchase_form).permit(:card_type, :expire_month, :expire_year, :security_code, :postal_code, :prefecture_id, :city, :address, :phone_number, :building).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
+    params.require(:purchase_form).permit(:postal_code, :prefecture_id, :city, :address, :phone_number, :building).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
   end
 
   def pay_item
@@ -38,12 +39,10 @@ class PurchasesController < ApplicationController
   end
 
   def user_confirmation
-    find_item
     redirect_to root_path if current_user.id === @item.user_id
   end
 
   def sold_item
-    find_item
     redirect_to root_path if @item.purchase
   end
 
